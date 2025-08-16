@@ -74,3 +74,6 @@ Mission:-
 
 //forge install openzeppelin/openzeppelin-contracts
 //forge install smartcontractkit/chainlink-brownie-contracts@0.6.1
+//forge test --match-test testRevertsIfTokenLengthDoesntMatchPriceFeeds
+
+//forge coverage --report debug
