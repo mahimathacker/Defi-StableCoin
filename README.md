@@ -77,3 +77,60 @@ Mission:-
 //forge test --match-test testRevertsIfTokenLengthDoesntMatchPriceFeeds
 
 //forge coverage --report debug
+
+/*
+
+== Return ==
+0: contract DecentralizedStableCoin 0x15B09287B8FFDc0aEC73c00342659ceF83828548
+1: contract DSCEngine 0xcd7e61D8C74e3B4FB87b85C29A039c2d229B1cA6
+2: contract HelperConfig 0xC7f2Cf4845C6db0e1a1e91ED41Bcd0FcC1b0E141
+
+*/
+
+/* 
+Verify contract:  forge verify-contract \                                    
+  --chain sepolia \
+  0x15B09287B8FFDc0aEC73c00342659ceF83828548 \
+  src/DecentralizedStableCoin.sol:DecentralizedStableCoin \
+  --etherscan-api-key $ETHERSCAN_API_KEY \
+  --compiler-version v0.8.30+commit.73712a01 \
+  --watch
+*/
+forge script script/DeployDsc.s.sol:DeployDsc \
+  --rpc-url $SEPOLIA_RPC_URL \
+  --broadcast -vvv
+
+cast code 0x15B09287B8FFDc0aEC73c00342659ceF83828548 --rpc-url $SEPOLIA_RPC_URL
+
+
+
+//Ask yourself What are our invariants/properties here?
+
+fuzz testing: Supply random data to your system in an attempt to break it.
+invariant:  property of our system that should always hold
+Symbolice execution/formal verifications
+
+Add no of runs in foundry.tomal example file 
+
+[fuzz]
+
+runs = 10000
+
+Things to do for fuzz testing:- 
+
+1) Understand the invariants 
+2) Write a fuzz test for invariant
+
+Stateless fuzz testing: Where the state of the previous run is discarded for every new run 
+
+Statefull fuzzing: fuzzing where the final state of previous run is starting state of the next run
+use Invariant_ keyword to write stateful fuzz testing.
+
+In foundry, 
+
+fuzz tests = random data to one function 
+invariant tests = random data and random function calls to many functions
+
+
+foundry fuzzing = Stateless fuzzing
+Foundry invarint = Stateful fuzzing

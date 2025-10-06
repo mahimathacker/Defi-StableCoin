@@ -53,6 +53,7 @@ contract DSCEngine is ReentrancyGuard {
     //Errors//
     ////////////////////////////////
 
+
     error DSCEngine__NeedsMoreThanZero();
     error DSCEngine__TokenAddressesAndPriceFeedAddressesLengthsMustBeTheSame();
     error DSCEngine__NotAllowedToken();
@@ -283,13 +284,12 @@ contract DSCEngine is ReentrancyGuard {
     and user can get liquidated if the health factor is below 1
     */
 
-    function _healthFactor(address user) private view returns (uint256) {
-        //total DC Minted
-        //total collateral value
-        (uint256 totalDscMinted, uint256 totalCollateralValue) = _getAccountInformation(user);
-        uint256 collateralAdjustedForThreshold = (totalCollateralValue * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION;
-        return (collateralAdjustedForThreshold * PRECISION) / totalDscMinted;
-    }
+ function _healthFactor(address user) private view returns(uint256){
+    (uint256 totalDscMinted, uint256 collateralValueInUsd) = _getAccountInformation(user);
+
+    uint256 collateralAdjustedForThreshold = (collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION;
+    return (collateralAdjustedForThreshold * PRECISION) / totalDscMinted;
+}
     //Check if the user has enough collateral and revert otherwise
 
     function _revertIfHealthFactorIsBroken(address user) internal view {
@@ -329,4 +329,16 @@ contract DSCEngine is ReentrancyGuard {
     function getAccountInformation(address user) external view returns(uint256 totalDscMinted, uint256 totalCollateralValue){
 (totalDscMinted, totalCollateralValue) = _getAccountInformation(user);
 
-}}
+}
+
+function _calculateHealthFactor(uint256 totalDscMinted, uint256 collateralValueInUsd)
+    internal
+    pure
+    returns (uint256)
+{
+    if (totalDscMinted == 0) return type(uint256).max;
+    uint256 collateralAdjustedForThreshold = (collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION;
+    return (collateralAdjustedForThreshold * PRECISION) / totalDscMinted;
+}
+
+}
