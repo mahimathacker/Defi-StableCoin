@@ -8,6 +8,6 @@ remappings = ["@chainlink/contracts=lib/chainlink-brownie-contracts/contracts","
 runs = 128
 depth = 128 
 
-fail_on_revert=false //prevents random revert calls for each tests
+fail_on_revert=true # prevents random revert calls for each tests
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

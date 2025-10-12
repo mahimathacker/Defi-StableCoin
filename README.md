@@ -56,6 +56,11 @@ $ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --pri
 ```shell
 $ cast <subcommand>
 ```
+### To get all the methods 
+
+```shell
+$ forge inspect DSCEngine methods
+```
 
 ### Help
 
@@ -134,3 +139,15 @@ invariant tests = random data and random function calls to many functions
 
 foundry fuzzing = Stateless fuzzing
 Foundry invarint = Stateful fuzzing
+
+2. What is the primary purpose of fuzz testing in software development?
+
+“To automatically supply random or pseudo-random data to a system to uncover bugs or vulnerabilities.”
+
+This means a testing tool (called a fuzzer) automatically feeds lots of random or unexpected inputs into a program to see how it reacts.
+If the program crashes, hangs, or behaves incorrectly, it reveals a bug or security flaw that developers might have missed.
+
+8. In fuzz testing frameworks that simulate user behavior, what is the typical purpose of 'handler' functions?
+
+To define specific actions or function calls that the fuzzer can randomly select and sequence to interact with the system under test.
+
